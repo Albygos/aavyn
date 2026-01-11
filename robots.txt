@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: http://pdf-converter.shop/sitemap.php
