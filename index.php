@@ -46,7 +46,7 @@ $description = "$keyword women’s kurtis with elegant designs, breathable fabri
 <meta name="geo.position" content="20.5937;78.9629">
 <meta name="ICBM" content="20.5937, 78.9629">
 <meta name="language" content="en-IN">
-
+<meta name="google-site-verification" content="GA71h2ytKjPxDBXWXkrUGviyNGlmk1L3SUJMKpUT0JA" />
   <meta property="og:image" content="<?php echo $domain; ?>assets/preview.jpg" />
   <link rel="canonical" href="<?php echo $domain . '?q=' . urlencode($keyword); ?>" />
   <link rel="stylesheet" href="assets/style.css" />
