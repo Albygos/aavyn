@@ -1,5 +1,5 @@
 <?php
-$domain = "http://pdf-converter.shop/";
+$domain = "https://pdf-converter.shop/";
 
 // --- Load keyword.txt file (each line = one keyword) ---
 $keywordsFile = __DIR__ . '/keywords.txt';
