@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/xml; charset=utf-8");
 
-$domain = "http://pdf-converter.shop/";
+$domain = "https://pdf-converter.shop/";
 $keywordsFile = __DIR__ . '/keywords.txt';
 
 if (!file_exists($keywordsFile)) {
