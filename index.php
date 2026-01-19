@@ -48,7 +48,7 @@ $description = "$keyword women’s kurtis with elegant designs, breathable fabri
 <meta name="language" content="en-IN">
 <meta name="google-site-verification" content="GA71h2ytKjPxDBXWXkrUGviyNGlmk1L3SUJMKpUT0JA" />
   <meta property="og:image" content="<?php echo $domain; ?>assets/preview.jpg" />
-  <link rel="canonical" href="<?php echo $domain . '?q=' . urlencode($keyword); ?>" />
+  <link rel="canonical" href="<?php echo $domain; ?>" />
   <link rel="stylesheet" href="assets/style.css" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
