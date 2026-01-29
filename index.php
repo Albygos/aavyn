@@ -2,8 +2,8 @@
 // ================================
 // CONFIG
 // ================================
-$domain = "https://yourfashiondomain.com/";
-$brand  = "AAVYA";
+$domain = "https://pdf-converter.shop/";
+$brand  = "luxeloom";
 
 // ================================
 // LOAD KEYWORDS
