@@ -1,54 +1,107 @@
 <?php
-$domain = "https://pdf-converter.shop/";
+// ================================
+// CONFIG
+// ================================
+$domain = "https://yourfashiondomain.com/";
+$brand  = "AAVYA";
 
-// --- Load keyword.txt file (each line = one keyword) ---
+// ================================
+// LOAD KEYWORDS
+// ================================
 $keywordsFile = __DIR__ . '/keywords.txt';
-$keywordsList = file_exists($keywordsFile)
-  ? file($keywordsFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)
-  : [];
+$keywords = file_exists($keywordsFile)
+    ? file($keywordsFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES)
+    : [];
 
-// --- Choose keyword ---
-// 1. If ?q= is present, use it
-// 2. Else randomly pick one from keywords.txt (changes daily for SEO stability)
-// 3. Else fallback to default keyword
-if (isset($_GET['q']) && trim($_GET['q']) !== '') {
-    $keyword = trim($_GET['q']);
-} elseif (!empty($keywordsList)) {
-    // Optional: stable random keyword per day (better for SEO)
-    $daySeed = date('Ymd');
-    srand(crc32($daySeed));
-    $keyword = $keywordsList[array_rand($keywordsList)];
-} else {
-    $keyword = 'women’s kurtis with elegant designs, breathable fabrics, and perfect fits. Shop festive, office, and everyday ethnic wear online';
+// Convert keywords to slugs
+$keywordMap = [];
+foreach ($keywords as $kw) {
+    $slug = strtolower(trim(preg_replace('/[^a-z0-9]+/i', '-', $kw), '-'));
+    $keywordMap[$slug] = trim($kw);
 }
 
-// --- Sanitize output ---
-$keyword = htmlspecialchars($keyword, ENT_QUOTES, 'UTF-8');
+// ================================
+// DETECT PAGE
+// ================================
+$slug = $_GET['slug'] ?? '';
 
-// --- Dynamic description ---
-$description = "$keyword women’s kurtis with elegant designs, breathable fabrics, and perfect fits. Shop festive, office, and everyday ethnic wear online";
+// Homepage
+if ($slug === '' || !isset($keywordMap[$slug])) {
+    $isHomepage = true;
+    $keyword = "Premium Women's Kurtis Online in India";
+    $canonical = $domain;
+} else {
+    $isHomepage = false;
+    $keyword = $keywordMap[$slug];
+    $canonical = $domain . $slug;
+}
+
+// Escape output
+function e($str) {
+    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
+}
+
+// ================================
+// SEO CONTENT GENERATOR
+// ================================
+function seo_paragraph($keyword) {
+    return "
+    Discover the latest collection of {$keyword} crafted with premium fabrics,
+    modern silhouettes, and traditional elegance. Our {$keyword} designs are
+    perfect for office wear, festive occasions, and everyday comfort. Each piece
+    is carefully tailored to ensure breathability, durability, and a flattering
+    fit for Indian body types. Shop {$keyword} online and experience ethnic fashion
+    that blends heritage craftsmanship with contemporary style.
+    ";
+}
+
+// ================================
+// META
+// ================================
+$title = $isHomepage
+    ? "Buy Women's Kurtis Online | $brand India"
+    : "$keyword for Women | Buy Online at $brand";
+
+$description = $isHomepage
+    ? "Shop premium women's kurtis online in India. Office wear, festive, cotton & designer kurtis with fast delivery and easy returns."
+    : "Shop $keyword with elegant designs, breathable fabrics and perfect fits. Buy online with free shipping & easy returns.";
 
 ?>
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
- <title><?php echo $keyword; ?></title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="description" content="<?php echo $keyword; ?> women’s kurtis with elegant designs, breathable fabrics, and perfect fits. Shop festive, office, and everyday ethnic wear online." />
-  <meta property="og:title" content="<?php echo $keyword; ?>" />
-  <meta property="og:description" content="<?php echo $description; ?>" />
-  <meta property="og:url" content="<?php echo $domain; ?>" />
-  <meta property="og:type" content="website" />
-  <meta name="geo.region" content="IN">
-<meta name="geo.placename" content="India">
-<meta name="geo.position" content="20.5937;78.9629">
-<meta name="ICBM" content="20.5937, 78.9629">
-<meta name="language" content="en-IN">
+<title><?= e($title) ?></title>
+<meta name="description" content="<?= e($description) ?>">
+
+<link rel="canonical" href="<?= e($canonical) ?>">
+
+<meta property="og:title" content="<?= e($title) ?>">
+<meta property="og:description" content="<?= e($description) ?>">
+<meta property="og:url" content="<?= e($canonical) ?>">
+<meta property="og:type" content="website">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ClothingStore",
+  "name": "<?= $brand ?>",
+  "alternateName": "<?= e($keyword) ?>",
+  "url": "<?= e($canonical) ?>",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IN"
+  },
+  "priceRange": "₹₹"
+}
+</script>
+
+
+
+
 <meta name="google-site-verification" content="GA71h2ytKjPxDBXWXkrUGviyNGlmk1L3SUJMKpUT0JA" />
-  <meta property="og:image" content="<?php echo $domain; ?>assets/preview.jpg" />
-  <link rel="canonical" href="<?php echo $domain . '?q=' . urlencode($keyword); ?>" />
   <link rel="stylesheet" href="assets/style.css" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -159,13 +212,13 @@ $description = "$keyword women’s kurtis with elegant designs, breathable fabri
 {
   "@context": "https://schema.org",
   "@type": "ClothingStore",
-  "name": "<?php echo $keyword; ?>",
-  "url": "<?php echo $domain . '?q=' . urlencode($keyword); ?>",
+  "name": "<?= $brand ?>",
+  "alternateName": "<?= e($keyword) ?>",
+  "url": "<?= e($canonical) ?>",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "IN"
   },
-  "currenciesAccepted": "INR",
   "priceRange": "₹₹"
 }
 </script>
@@ -191,7 +244,7 @@ $description = "$keyword women’s kurtis with elegant designs, breathable fabri
 <div class="relative bg-cover bg-center flex flex-col justify-end overflow-hidden rounded-xl min-h-[480px] shadow-lg" style='background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.7) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuAIUL8TSegTfDdcbqT0KwxC1L0m8DVSnxRPsBUUVY_mOQY6ZWMtEUh67OgwAKNVpX9WCbooKLIDQyH0KgqQJrJfrFKfLS3hF3asS6GSrQhJcrMHo6bClrg5fTDdWJ_31xqYAaV9-6Rg4nxHTTfef6dE0yZwa4mEco2oCiuockzH7eV1xmtmACgA6jkTklcgWZgKg20vmD1WC0_iXZhpnUXhcXqHKwnKtY4CO1L5hYiVaLVe7NB98OpqXoFW2U-jokVXWgmRy0fuoCTe");'>
 <div class="flex flex-col p-6 gap-3">
 <span class="text-accent-gold font-semibold tracking-widest text-xs uppercase">Premium Collection</span>
-<h1 class="text-white text-3xl font-bold leading-tight tracking-tight"><?php echo $keyword; ?></h1>
+<h1 class="text-white text-3xl font-bold leading-tight tracking-tight"><?= e($keyword) ?></h1>
 <button class="mt-2 bg-primary text-white w-fit px-6 py-3 rounded-lg font-bold text-sm tracking-wide shadow-lg active:scale-95 transition-transform">
                             SHOP THE COLLECTION
                         </button>
@@ -305,7 +358,7 @@ $description = "$keyword women’s kurtis with elegant designs, breathable fabri
 </div>
 <section class="mt-8">
 <div class="flex justify-between items-center px-4 mb-4">
-<h3 class="text-[#181112] dark:text-white text-lg font-bold leading-tight"><?php echo $keyword; ?></h3>
+<h3 class="text-[#181112] dark:text-white text-lg font-bold leading-tight"><?= e($keyword) ?></h3>
 <span class="text-primary text-sm font-semibold">Read Blog</span>
 </div>
 <div class="flex overflow-x-auto no-scrollbar px-4 gap-4 pb-4">
@@ -313,7 +366,7 @@ $description = "$keyword women’s kurtis with elegant designs, breathable fabri
 <div class="h-40 bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDsxLghIxgv6NQ05ObvymiYG6HZWRVDOZk-zNWzXfP2M7WU_xKD3-gDAENXQpYsLauTy1J8edrTc57cXvB5Hslgv0h_fTN89nCUrclUYNltWG58UQBkB6HfJizAR8hs7xR-5NAMorxh-EQ7KgfwNgm0UT2Tm52COY4tpRoMHQLm6c9XIxJSSvAiZi5Tzfaxj4pxGezMBn3jfDI2en6AJsdofdhircZVbLgGZ-QSuNp5VdaBeqn9icFpCPCMQ6jmnZNcp6Rw9aihsCPz");'></div>
 <div class="p-4">
 <p class="text-accent-gold text-[10px] font-bold uppercase mb-1">Styling Guide</p>
-<h4 class="text-sm font-bold text-[#181112] dark:text-white leading-tight"> <?php echo $keyword; ?> 5 Ways to Style Your Kurti for Office</h4>
+<h4 class="text-sm font-bold text-[#181112] dark:text-white leading-tight"> <?= e($keyword) ?> 5 Ways to Style Your Kurti for Office</h4>
 <p class="text-xs text-gray-500 mt-2">Elevate your daily workwear with these simple ethnic fusion tips...</p>
 </div>
 </div>
@@ -388,7 +441,7 @@ $description = "$keyword women’s kurtis with elegant designs, breathable fabri
 <li><a class="hover:text-primary transition-colors" href="#">Wedding Lehengas</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Silk Sarees</a></li>
 <li><a class="hover:text-primary transition-colors" href="#">Anarkali Sets</a></li>
-<li><a class="hover:text-primary transition-colors" href="#"><?php echo $keyword; ?></a></li>
+<li><a class="hover:text-primary transition-colors" href="#"><?= e($keyword) ?></a></li>
 </ul>
 </div>
 <div>
@@ -455,3 +508,7 @@ $description = "$keyword women’s kurtis with elegant designs, breathable fabri
 </div>
 
 </body></html>
+
+
+
+
