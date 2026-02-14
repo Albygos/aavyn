@@ -2,7 +2,7 @@
 // ================================
 // CONFIG
 // ================================
-$domain = "https://pdf-converter.shop/";
+$domain = "https://kurta.luxeloom.co/";
 $brand  = "luxeloom";
 
 // ================================
