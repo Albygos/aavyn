@@ -77,7 +77,7 @@ $description = $isHomepage
 <meta name="description" content="<?= e($description) ?>">
 
 <link rel="canonical" href="<?= e($canonical) ?>">
-
+<meta name="google-site-verification" content="9nkCdhV2SwQrUw_haFmHmb9JnNQl4WKolT_lOTWo-3E" />
 <meta property="og:title" content="<?= e($title) ?>">
 <meta property="og:description" content="<?= e($description) ?>">
 <meta property="og:url" content="<?= e($canonical) ?>">
