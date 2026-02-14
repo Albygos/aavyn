@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: http://pdf-converter.shop/sitemap.php
+Sitemap: https://kurta.luxeloom.co/sitemap.php
