@@ -1,7 +1,7 @@
 <?php
 header("Content-Type: application/xml; charset=utf-8");
 
-$domain = "https://pdf-converter.shop";
+$domain = "https://kurta.luxeloom.co";
 $keywordsFile = __DIR__ . '/keywords.txt';
 
 echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
