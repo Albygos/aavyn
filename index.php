@@ -482,11 +482,6 @@ document.addEventListener("DOMContentLoaded", function () {
     closeBtn.addEventListener("click", closePopup);
 });
 </script>
-
-</body>
-</html>
-
-
 <!-- PASTE POPUP HERE -->
 <div id="storePopup"
      class="fixed inset-0 hidden items-center justify-center z-[9999]">
@@ -518,6 +513,11 @@ document.addEventListener("DOMContentLoaded", function () {
         </div>
     </div>
 </div>
-</body></html>
+
+
+
+
+</body>
+</html>
 
 
