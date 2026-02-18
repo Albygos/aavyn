@@ -506,7 +506,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // ✅ Redirect when clicking Visit Store
     continueBtn.addEventListener("click", function () {
-        window.location.href = "https://yourstorelink.com";
+        window.location.href = "https://luxeloom.co/collections/women";
     });
 
     // ❌ Close popup if user stays
