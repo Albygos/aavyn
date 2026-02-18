@@ -483,10 +483,7 @@ $description = $isHomepage
                 Visit Store
             </button>
 
-            <button id="closePopup"
-                    class="border border-stone-300 px-6 py-3 text-xs font-bold uppercase tracking-widest">
-                Stay Here
-            </button>
+            
         </div>
     </div>
 </div>
