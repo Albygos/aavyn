@@ -178,6 +178,12 @@ $description = $isHomepage
 <a class="bg-white/10 backdrop-blur-sm hover:bg-white/20 text-white font-bold py-5 px-12 border border-white/30 transition-all" href="#festive">
                         View Festive Sets
                     </a>
+  <a href="https://yourstorelink.com"
+       id="visitStoreBtn"
+       class="bg-accent text-primary font-bold py-5 px-12 border border-primary/20 shadow-xl transition-all">
+       Visit Store
+    </a>
+</div>
 </div>
 </div>
 </div>
@@ -450,4 +456,68 @@ $description = $isHomepage
 </div>
 </footer>
 
+</footer>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const visitBtn = document.getElementById("visitStoreBtn");
+    const popup = document.getElementById("storePopup");
+    const overlay = document.getElementById("popupOverlay");
+    const closeBtn = document.getElementById("closePopup");
+
+    visitBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        popup.classList.remove("hidden");
+        popup.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+    });
+
+    function closePopup() {
+        popup.classList.add("hidden");
+        popup.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+    }
+
+    overlay.addEventListener("click", closePopup);
+    closeBtn.addEventListener("click", closePopup);
+});
+</script>
+
+</body>
+</html>
+
+
+<!-- PASTE POPUP HERE -->
+<div id="storePopup"
+     class="fixed inset-0 hidden items-center justify-center z-[9999]">
+
+    <div id="popupOverlay"
+         class="absolute inset-0 bg-black/50 backdrop-blur-md transition-opacity duration-300">
+    </div>
+
+    <div class="relative bg-white dark:bg-background-dark p-10 max-w-md w-full text-center shadow-2xl border border-accent/30 z-10">
+
+        <h3 class="text-2xl font-bold text-primary dark:text-accent mb-4">
+            You're Leaving Luxeloom
+        </h3>
+
+        <p class="text-sm text-stone-500 dark:text-stone-400 mb-8">
+            You are about to visit our official store.
+        </p>
+
+        <div class="flex gap-4 justify-center">
+            <a href="https://yourstorelink.com"
+               class="bg-primary text-white px-6 py-3 font-bold uppercase text-xs tracking-widest">
+               Continue
+            </a>
+
+            <button id="closePopup"
+                    class="border border-stone-300 px-6 py-3 text-xs font-bold uppercase tracking-widest">
+                Cancel
+            </button>
+        </div>
+    </div>
+</div>
 </body></html>
+
+
