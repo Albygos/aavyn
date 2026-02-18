@@ -457,63 +457,69 @@ $description = $isHomepage
 </footer>
 
 </footer>
+<!-- STORE POPUP -->
+<div id="storePopup"
+     class="fixed inset-0 hidden items-center justify-center z-[9999]">
+
+    <!-- Overlay -->
+    <div id="popupOverlay"
+         class="absolute inset-0 bg-black/60 backdrop-blur-lg">
+    </div>
+
+    <!-- Popup Box -->
+    <div class="relative bg-white dark:bg-background-dark p-10 max-w-md w-full text-center shadow-2xl border border-accent/30 z-10">
+
+        <h3 class="text-2xl font-bold text-primary dark:text-accent mb-4">
+            Welcome to Luxeloom
+        </h3>
+
+        <p class="text-sm text-stone-500 dark:text-stone-400 mb-8">
+            Visit our official store to explore our latest ethnic collections.
+        </p>
+
+        <div class="flex gap-4 justify-center">
+            <button id="continueBtn"
+                    class="bg-primary text-white px-6 py-3 font-bold uppercase text-xs tracking-widest">
+                Visit Store
+            </button>
+
+            <button id="closePopup"
+                    class="border border-stone-300 px-6 py-3 text-xs font-bold uppercase tracking-widest">
+                Stay Here
+            </button>
+        </div>
+    </div>
+</div>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
 
-    const visitBtn = document.getElementById("visitStoreBtn");
     const popup = document.getElementById("storePopup");
-    const overlay = document.getElementById("popupOverlay");
     const closeBtn = document.getElementById("closePopup");
+    const continueBtn = document.getElementById("continueBtn");
+    const overlay = document.getElementById("popupOverlay");
 
-    visitBtn.addEventListener("click", function (e) {
-        e.preventDefault();
-        popup.classList.remove("hidden");
-        popup.classList.add("flex");
-        document.body.classList.add("overflow-hidden");
+    // 🔥 SHOW POPUP AUTOMATICALLY WHEN SITE LOADS
+    popup.classList.remove("hidden");
+    popup.classList.add("flex");
+    document.body.classList.add("overflow-hidden");
+
+    // ✅ Redirect when clicking Visit Store
+    continueBtn.addEventListener("click", function () {
+        window.location.href = "https://yourstorelink.com";
     });
 
+    // ❌ Close popup if user stays
     function closePopup() {
         popup.classList.add("hidden");
         popup.classList.remove("flex");
         document.body.classList.remove("overflow-hidden");
     }
 
-    overlay.addEventListener("click", closePopup);
     closeBtn.addEventListener("click", closePopup);
+    overlay.addEventListener("click", closePopup);
 });
 </script>
-<!-- PASTE POPUP HERE -->
-<div id="storePopup"
-     class="fixed inset-0 hidden items-center justify-center z-[9999]">
-
-    <div id="popupOverlay"
-         class="absolute inset-0 bg-black/50 backdrop-blur-md transition-opacity duration-300">
-    </div>
-
-    <div class="relative bg-white dark:bg-background-dark p-10 max-w-md w-full text-center shadow-2xl border border-accent/30 z-10">
-
-        <h3 class="text-2xl font-bold text-primary dark:text-accent mb-4">
-            You're Leaving Luxeloom
-        </h3>
-
-        <p class="text-sm text-stone-500 dark:text-stone-400 mb-8">
-            You are about to visit our official store.
-        </p>
-
-        <div class="flex gap-4 justify-center">
-            <a href="https://yourstorelink.com"
-               class="bg-primary text-white px-6 py-3 font-bold uppercase text-xs tracking-widest">
-               Continue
-            </a>
-
-            <button id="closePopup"
-                    class="border border-stone-300 px-6 py-3 text-xs font-bold uppercase tracking-widest">
-                Cancel
-            </button>
-        </div>
-    </div>
-</div>
-
 
 
 
